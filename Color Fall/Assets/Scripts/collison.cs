@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
@@ -32,16 +32,22 @@ public class collison : MonoBehaviour
             convertS = addS.ToString();
             score.text = convertS;
 
-            if (tempPlane != null)
-            {
-                Destroy(tempPlane.gameObject);
-            }
-            Transform newPlane = Instantiate(plane, plane.transform.position, Quaternion.identity);
+
+            //if (tempPlane != null)
+            //  Destroy(tempPlane.gameObject);
+
+            Transform newPlane;
+            if (tempPlane == null)
+                newPlane = Instantiate(plane, plane.transform.position, Quaternion.identity);
+            else
+                newPlane = Instantiate(plane, new Vector3(plane.transform.position.x, plane.transform.position.y, tempPlane.transform.position.z - 0.01f), Quaternion.identity);
+
             newPlane.GetComponent<Renderer>().material = this.gameObject.GetComponent<Renderer>().material;
             //Destroy(plane.gameObject);
             //newPlane.transform.parent = this.gameObject.transform;
             newPlane.transform.SetParent(gameObject.transform, true);
             tempPlane = newPlane;
+
 
 
             newPlane.GetComponent<Grow>().grow = true;
